@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- Main App Theme -->
+    <style name="Theme.NavigationApp2" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Primary Colors -->
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">@color/button_text</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/accent_cyan</item>
+        <item name="colorOnSecondary">@color/button_text</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:windowBackground">@color/dark_background</item>
+
+    </style>
+</resources>

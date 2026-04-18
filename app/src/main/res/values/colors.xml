@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark_background">#FF050505</color>
+    <color name="ic_app_background">#FF050505</color>
+    <color name="surface_dark">#D91C1C1F</color>
+    <color name="surface_variant">#1AFFFFFF</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FFA1A1AA</color>
+    <color name="accent">#FFEAB308</color> <!-- Neon Gold/Yellow -->
+    <color name="accent_dark">#FFCA8A04</color>
+    <color name="accent_cyan">#FF06B6D4</color> <!-- Cyan/Teal -->
+    <color name="button_background">#1AFFFFFF</color>
+    <color name="button_text">#FFFFFFFF</color>
+    <color name="border_light">#1AFFFFFF</color>
+    
+    <!-- Gradients and glow -->
+    <color name="glow_gold_start">#33EAB308</color>
+    <color name="glow_gold_end">#00EAB308</color>
+    
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

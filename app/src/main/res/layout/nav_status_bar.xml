@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Navigation status bar — shown while navigation is running inside Settings.
+     Sits at the top of the screen, below the status bar.
+     Shows: current step keywords (small) + current status message (larger). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#EE0D1117"
+    android:elevation="14dp">
+
+    <!-- Keywords line — small, muted. Shows what we are searching for. -->
+    <TextView
+        android:id="@+id/navKeywordsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="2dp"
+        android:text="Searching: ..."
+        android:textColor="#7C7CAA"
+        android:textSize="11sp"
+        android:fontFamily="sans-serif"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- Status message container — holds icon and text -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="10dp">
+
+        <!-- Spinner shown while scanning -->
+        <ProgressBar
+            android:id="@+id/navStatusProgress"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="8dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:indeterminateTint="#6C63FF" />
+
+        <TextView
+            android:id="@+id/navStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔍 Scanning..."
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <!-- Accent line at bottom -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#6C63FF" />
+
+</LinearLayout>
