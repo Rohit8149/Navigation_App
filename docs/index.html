@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NavigationApp — AI-Powered Android Settings Navigator</title>
+  <meta name="description" content="NavigationApp is an AI-powered Android accessibility assistant that navigates Settings hands-free using natural language commands powered by Groq LLaMA." />
+  <meta property="og:title" content="NavigationApp — AI Android Settings Navigator" />
+  <meta property="og:description" content="Navigate Android Settings with your voice using AI. Powered by Groq LLaMA." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+        </div>
+        <span>NavigationApp</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features" id="nav-features">Features</a></li>
+        <li><a href="#how-it-works" id="nav-how">How It Works</a></li>
+        <li><a href="#roadmap" id="nav-roadmap">Roadmap</a></li>
+        <li><a href="#download" id="nav-download">Download</a></li>
+      </ul>
+      <a href="#download" id="nav-cta" class="btn btn-primary btn-sm">Download APK</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#features" class="mobile-nav-link">Features</a>
+    <a href="#how-it-works" class="mobile-nav-link">How It Works</a>
+    <a href="#roadmap" class="mobile-nav-link">Roadmap</a>
+    <a href="#download" class="mobile-nav-link">Download</a>
+  </div>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" id="hero">
+    <!-- background orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Powered by Groq LLaMA AI
+      </div>
+      <h1 class="hero-title">
+        Navigate Android Settings
+        <span class="gradient-text">with Your Voice</span>
+      </h1>
+      <p class="hero-subtitle">
+        NavigationApp is an AI-powered accessibility assistant that autonomously navigates through Android Settings using natural language — no tapping required.
+      </p>
+      <div class="hero-actions">
+        <a href="#download" class="btn btn-primary" id="hero-download-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download APK
+        </a>
+        <a href="https://github.com/Rohit8149/Navigation_App" target="_blank" class="btn btn-ghost" id="hero-github-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-value">Groq</span>
+          <span class="stat-label">LLaMA AI</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-value">26+</span>
+          <span class="stat-label">API Level</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-value">Free</span>
+          <span class="stat-label">Open Source</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Mockup -->
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <!-- Simulated app UI -->
+            <div class="app-bg">
+              <div class="app-status-bar">
+                <span>NavigationApp</span>
+                <span class="status-dot-live">● ACTIVE</span>
+              </div>
+
+              <div class="app-hero-section">
+                <div class="app-orb"></div>
+                <div class="app-compass">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,0.9)" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                  </svg>
+                </div>
+                <p class="app-title-text">NavigationApp</p>
+                <p class="app-sub-text">AI Settings Navigator</p>
+              </div>
+
+              <div class="app-card">
+                <div class="app-card-row">
+                  <span class="app-card-label">Status</span>
+                  <span class="app-card-value active">● Running</span>
+                </div>
+                <div class="app-card-row">
+                  <span class="app-card-label">Last Command</span>
+                  <span class="app-card-value">"Open Wi-Fi"</span>
+                </div>
+              </div>
+
+              <div class="app-nav-pill">
+                <div class="app-nav-dot"></div>
+                <span>Navigating… Step 2 / 4</span>
+              </div>
+
+              <div class="app-btn-row">
+                <div class="app-btn-stop">Stop</div>
+                <div class="app-btn-start">Start</div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating FAB -->
+          <div class="phone-fab">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+            </svg>
+          </div>
+        </div>
+        <div class="phone-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FEATURES ═══════════ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Features</div>
+        <h2 class="section-title">Everything You Need for Hands-Free Navigation</h2>
+        <p class="section-subtitle">A complete AI-powered accessibility stack built into one lightweight app.</p>
+      </div>
+      <div class="features-grid" id="featuresGrid">
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #a78bfa;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>AI-Powered Navigation</h3>
+          <p>Sends your command to Groq LLaMA which returns a step-by-step path through Android Settings. Re-routes automatically if a step is missing.</p>
+          <div class="feature-tag">Groq LLaMA 3</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #60a5fa;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3>Smart Node Matching</h3>
+          <p>Word-boundary-aware fuzzy matching with Levenshtein scoring. Never confuses "Font size" with "Display size" — strict thresholds prevent all false positives.</p>
+          <div class="feature-tag">Multi-Strategy Fallback</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #34d399;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Floating Overlay UI</h3>
+          <p>A persistent floating icon lives on top of all apps. Tap to type a command. Status bar shows real-time step progress. Help button triggers AI re-routing.</p>
+          <div class="feature-tag">Glass Morphism Dark UI</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #f59e0b;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Developer Logging</h3>
+          <p>Real-time in-app log viewer captures navigation decisions, match scores, API responses and search outcomes — no ADB required for debugging.</p>
+          <div class="feature-tag">DevLogManager</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #f87171;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Navigation Guard</h3>
+          <p>Detects when you leave Settings and pauses navigation. Distinguishes real app exits from transient system UI overlays like volume popups or notifications.</p>
+          <div class="feature-tag">No False Exits</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #c084fc;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Agentic Executor</h3>
+          <p>Maintains full exploration history to prevent loops. Enforces root-to-leaf order. Auto-scrolls to find off-screen elements before declaring a step "not found".</p>
+          <div class="feature-tag">Loop-Free Navigation</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #38bdf8;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>Live UI Tree Viewer</h3>
+          <p>Built-in screen that dumps and displays the live accessibility UI tree of any foreground app — see exactly what the AI and navigator are working with.</p>
+          <div class="feature-tag">On-Device Debugger</div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon" style="--icon-color: #fb923c;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <h3>Accessibility-First</h3>
+          <p>Built on Android's AccessibilityService API. Works system-wide without root. Captures and interacts with any app's UI tree in real time.</p>
+          <div class="feature-tag">No Root Required</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ HOW IT WORKS ═══════════ -->
+  <section class="section section-alt" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">How It Works</div>
+        <h2 class="section-title">From Command to Action in Seconds</h2>
+        <p class="section-subtitle">Type a natural language command — the AI figures out the path and the app does the rest.</p>
+      </div>
+      <div class="steps-container">
+        <div class="step" data-reveal>
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h3>You Type a Command</h3>
+            <p>Open the floating dialog and type something like <span class="code-inline">"Open Wi-Fi settings"</span> or <span class="code-inline">"Change font size"</span>.</p>
+          </div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+        </div>
+        <div class="step-connector"><div class="connector-line"></div></div>
+
+        <div class="step" data-reveal>
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h3>AI Plans the Path</h3>
+            <p>Groq LLaMA receives your command + the live UI tree and returns a step-by-step navigation plan through the Settings hierarchy.</p>
+          </div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(96,165,250,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+        </div>
+        <div class="step-connector"><div class="connector-line"></div></div>
+
+        <div class="step" data-reveal>
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h3>Smart Node Matching</h3>
+            <p>The NodeMatcher finds the exact UI element to tap using fuzzy word-boundary matching — no false positives, handles typos gracefully.</p>
+          </div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </div>
+        <div class="step-connector"><div class="connector-line"></div></div>
+
+        <div class="step" data-reveal>
+          <div class="step-number">04</div>
+          <div class="step-content">
+            <h3>Tap & Navigate</h3>
+            <p>The accessibility service performs the actual taps on screen, step by step, showing you live progress in the status overlay.</p>
+          </div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(249,115,22,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ROADMAP ═══════════ -->
+  <section class="section" id="roadmap">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Roadmap</div>
+        <h2 class="section-title">What's Coming Next</h2>
+        <p class="section-subtitle">20 planned updates across 5 levels of complexity. Each one builds on the last.</p>
+      </div>
+      <div class="roadmap-grid">
+
+        <div class="roadmap-level" data-reveal>
+          <div class="level-header level-blue">
+            <span class="level-badge">Level 2</span>
+            <h3>Core Improvements</h3>
+            <p>Short-term</p>
+          </div>
+          <ul class="roadmap-items">
+            <li><span class="ri-tag">FU-01</span> Voice Input & Wake Word</li>
+            <li><span class="ri-tag">FU-02</span> Multi-Step Command Queuing</li>
+            <li><span class="ri-tag">FU-03</span> Settings Value Reading</li>
+            <li><span class="ri-tag">FU-04</span> Toggle / Change Setting Values</li>
+            <li><span class="ri-tag">FU-05</span> Persistent Session History</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-level" data-reveal>
+          <div class="level-header level-yellow">
+            <span class="level-badge">Level 3</span>
+            <h3>Intelligence & Reliability</h3>
+            <p>Mid-term</p>
+          </div>
+          <ul class="roadmap-items">
+            <li><span class="ri-tag">FU-06</span> On-Device AI (Offline Mode)</li>
+            <li><span class="ri-tag">FU-07</span> Adaptive Path Learning</li>
+            <li><span class="ri-tag">FU-08</span> App-Agnostic Navigation</li>
+            <li><span class="ri-tag">FU-09</span> Confidence Score Display</li>
+            <li><span class="ri-tag">FU-10</span> Improved Scroll Strategy</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-level" data-reveal>
+          <div class="level-header level-orange">
+            <span class="level-badge">Level 4</span>
+            <h3>Platform Expansion</h3>
+            <p>Long-term</p>
+          </div>
+          <ul class="roadmap-items">
+            <li><span class="ri-tag">FU-11</span> TalkBack Compatibility</li>
+            <li><span class="ri-tag">FU-12</span> Shortcuts & Widget</li>
+            <li><span class="ri-tag">FU-13</span> Settings Profiles</li>
+            <li><span class="ri-tag">FU-14</span> Multi-Language Support</li>
+            <li><span class="ri-tag">FU-15</span> Cloud Sync & Backup</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-level" data-reveal>
+          <div class="level-header level-red">
+            <span class="level-badge">Level 5</span>
+            <h3>Advanced AI Vision</h3>
+            <p>Future vision</p>
+          </div>
+          <ul class="roadmap-items">
+            <li><span class="ri-tag">FU-16</span> Visual Grounding (Screenshots)</li>
+            <li><span class="ri-tag">FU-17</span> Proactive Suggestions</li>
+            <li><span class="ri-tag">FU-18</span> Macro Recorder</li>
+            <li><span class="ri-tag">FU-19</span> Wear OS Companion</li>
+            <li><span class="ri-tag">FU-20</span> Enterprise MDM Integration</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOWNLOAD ═══════════ -->
+  <section class="section download-section" id="download">
+    <div class="container">
+      <div class="download-card">
+        <div class="download-orb-1"></div>
+        <div class="download-orb-2"></div>
+        <div class="download-inner">
+          <div class="download-left">
+            <div class="download-badge" id="version-badge">
+              <span class="badge-dot"></span>
+              <span id="version-text">Loading latest version...</span>
+            </div>
+            <h2 class="download-title">Download NavigationApp</h2>
+            <p class="download-desc">Always free. Always the latest version. Requires Android 8.0 (API 26) or higher and Accessibility Service permission.</p>
+            <div class="download-meta">
+              <div class="meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                Android 8.0+
+              </div>
+              <div class="meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Needs Accessibility Permission
+              </div>
+              <div class="meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                .APK file (sideload)
+              </div>
+            </div>
+            <div class="download-actions">
+              <a href="https://github.com/Rohit8149/Navigation_App/releases/latest/download/NavigationApp.apk"
+                 id="download-apk-btn"
+                 class="btn btn-primary btn-lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Latest APK
+              </a>
+              <a href="https://github.com/Rohit8149/Navigation_App/releases"
+                 target="_blank"
+                 id="all-releases-btn"
+                 class="btn btn-ghost">
+                View All Releases
+              </a>
+            </div>
+          </div>
+          <div class="download-right">
+            <div class="install-steps">
+              <h3>How to Install</h3>
+              <ol class="install-list">
+                <li>
+                  <span class="install-num">1</span>
+                  <span>Download the APK file</span>
+                </li>
+                <li>
+                  <span class="install-num">2</span>
+                  <span>Enable <strong>"Install Unknown Apps"</strong> in Settings</span>
+                </li>
+                <li>
+                  <span class="install-num">3</span>
+                  <span>Open the downloaded APK and tap <strong>Install</strong></span>
+                </li>
+                <li>
+                  <span class="install-num">4</span>
+                  <span>Go to Settings → Accessibility → NavigationApp → <strong>Enable</strong></span>
+                </li>
+                <li>
+                  <span class="install-num">5</span>
+                  <span>Open the app, tap <strong>Start Assistant</strong> and you're ready!</span>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <div class="nav-logo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+              </svg>
+            </div>
+            <span>NavigationApp</span>
+          </div>
+          <p class="footer-tagline">AI-powered hands-free Android Settings navigation.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>App</h4>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#download">Download</a>
+          </div>
+          <div class="footer-col">
+            <h4>Developer</h4>
+            <a href="https://github.com/Rohit8149/Navigation_App" target="_blank">GitHub Repo</a>
+            <a href="https://github.com/Rohit8149/Navigation_App/releases" target="_blank">Releases</a>
+            <a href="https://github.com/Rohit8149/Navigation_App/issues" target="_blank">Report a Bug</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 NavigationApp. All rights reserved. Built with ❤️ for Android.</p>
+        <p class="footer-note">Not affiliated with Google or Android. Sideload at your own discretion.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
