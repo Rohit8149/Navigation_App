@@ -225,19 +225,43 @@ The following features are planned for future releases. Each one can be picked u
 
 ---
 
-## 🔧 Setup & Configuration
+## 📥 Installation & Setup
 
-1. Clone this repository.
-2. Open in **Android Studio**.
-3. Add your **Groq API key** in `GroqApiClient.java`:
-   ```java
-   private static final String API_KEY = "your_groq_api_key_here";
-   ```
-4. Build and install on a physical Android device (API 26+).
-5. Grant **Accessibility Service** permission in Android Settings → Accessibility → NavigationApp.
-6. Launch the app and tap **Start Assistant**.
+You can download the latest version of NavigationApp directly from our official website or via GitHub Releases.
+
+👉 **[Official Website & Download Link: rohit8149.github.io/Navigation_App](https://rohit8149.github.io/Navigation_App/)**
+
+### Step-by-Step Installation Guide (Android 13+)
+
+Because NavigationApp uses powerful **Accessibility Service** features to autonomously click and navigate, Android has strict security measures for "sideloaded" (non-Play Store) apps. Follow these steps to install and enable it:
+
+#### 1. Download & Install
+1. Download `NavigationApp.apk` from the website above.
+2. Open the file to install it. If prompted, enable **"Install Unknown Apps"** for your browser or file manager.
+3. *Note on "App blocked by Play Protect":* If Google Play Protect blocks the installation saying *"App may ask for sensitive data"*, tap **More details** and then **Install anyway**.
+   - *If there is no "Install anyway" button:* Open the Google Play Store → Tap your profile icon → Play Protect → Settings (gear icon) → Temporarily turn off *"Scan apps with Play Protect"*, then try installing the APK again.
+
+#### 2. Allow Restricted Settings (Crucial for Android 13+)
+Android 13+ blocks Accessibility permissions for sideloaded apps by default. You must lift this restriction:
+1. Go to your phone's **Settings** → **Apps** → find **NavigationApp**.
+2. Tap the **three vertical dots (⋮)** in the top-right corner of the App Info screen. (On Samsung, scroll to the very bottom of the page).
+3. Tap **"Allow restricted settings"** and verify with your PIN/fingerprint.
+
+#### 3. Enable Permissions & Start
+1. Still in the App Info screen, go to **Display over other apps** and turn it **ON**.
+2. Go to your phone's main **Settings** → **Accessibility** → **Installed Apps** → **NavigationApp** and turn it **ON**.
+3. Open the NavigationApp from your home screen, tap **Start Assistant**, and you're ready to use voice/text commands!
 
 ---
+
+## 🔧 Developer Setup
+
+1. Clone this repository and open in **Android Studio**.
+2. Add your **Groq API key** in `local.properties` (or inject it via build config):
+   ```properties
+   GROQ_API_KEY="your_groq_api_key_here"
+   ```
+3. Build and install on a physical Android device (API 26+).
 
 ## 📂 Key Classes Reference
 
