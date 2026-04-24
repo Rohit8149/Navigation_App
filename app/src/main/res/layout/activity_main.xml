@@ -31,23 +31,27 @@
                 android:layout_marginBottom="24dp"
                 android:src="@drawable/ic_app"
                 android:background="@drawable/circle_bg"
-                android:padding="14dp"
+                android:padding="16dp"
+                android:elevation="4dp"
                 android:tint="@color/accent" />
 
             <TextView
-                android:text="Your Personal\nHelping Assistant"
-                android:textSize="32sp"
+                android:text="Navigation Assistant"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 android:gravity="center"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="-0.02"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:text="This app helps you use your phone easily.\nJust type what you want, and the app will guide you step-by-step."
-                android:textSize="16sp"
+                android:text="Your personal guide. Just type what you want, and I'll navigate your device step-by-step."
+                android:textSize="15sp"
                 android:gravity="center"
+                android:lineSpacingExtra="4dp"
                 android:textColor="@color/text_secondary"
                 android:layout_marginBottom="40dp"
                 android:layout_width="match_parent"
@@ -59,54 +63,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/input_bg"
+                android:background="@drawable/bg_glass_card"
                 android:padding="24dp"
-                android:elevation="0dp"
+                android:elevation="4dp"
                 android:layout_marginBottom="24dp">
 
                 <TextView
-                    android:text="Required Permissions"
-                    android:textSize="18sp"
+                    android:text="Required Setup"
+                    android:textSize="16sp"
                     android:textStyle="bold"
+                    android:letterSpacing="0.05"
+                    android:textAllCaps="true"
                     android:textColor="@color/text_primary"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
+                <!-- Item 1 -->
                 <TextView
                     android:id="@+id/textOverlay"
-                    android:text="1. Overlay access controls the floating guide."
+                    android:text="1. Overlay Access"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                    
+                <TextView
+                    android:text="Allows the floating assistant icon to display."
                     android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginTop="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/btnOverlay"
-                    android:text="Overlay Settings"
+                    android:text="Enable Overlay"
                     android:background="@drawable/menu_bg"
                     android:textColor="@color/text_primary"
                     android:textAllCaps="false"
+                    android:fontFamily="sans-serif-medium"
                     android:layout_marginBottom="24dp"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"/>
+                    android:layout_height="48dp"/>
 
+                <!-- Item 2 -->
                 <TextView
                     android:id="@+id/textAccessibility"
-                    android:text="2. Accessibility reads exactly what's on the screen."
+                    android:text="2. Accessibility Access"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                    
+                <TextView
+                    android:text="Allows the assistant to read screens and execute navigation actions."
                     android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
                     android:layout_marginBottom="12dp"
+                    android:layout_marginTop="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/btnAccessibility"
-                    android:text="Accessibility Settings"
+                    android:text="Enable Accessibility"
                     android:background="@drawable/menu_bg"
                     android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-medium"
                     android:textAllCaps="false"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"/>
+                    android:layout_height="48dp"/>
 
             </LinearLayout>
 
@@ -125,11 +155,52 @@
                     android:text="Start Assistant"
                     android:background="@drawable/menu_bg"
                     android:textColor="@color/accent"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"
                     android:textAllCaps="false"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"/>
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="16dp"/>
+
+                <Button
+                    android:id="@+id/btnViewLogs"
+                    android:text="View AI Logs"
+                    android:background="@drawable/menu_bg"
+                    android:backgroundTint="#2D3748"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <Button
+                    android:id="@+id/btnViewUITree"
+                    android:text="Settings Knowledge Map"
+                    android:background="@drawable/menu_bg"
+                    android:backgroundTint="#2D3748"
+                    android:textColor="@color/accent"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <Button
+                    android:id="@+id/btnDeviceInfo"
+                    android:text="Device Information"
+                    android:background="@drawable/menu_bg"
+                    android:backgroundTint="#2D3748"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"/>
+
 
             </LinearLayout>
 

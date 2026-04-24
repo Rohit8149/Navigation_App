@@ -119,14 +119,30 @@ public class AccessibilityOverlay {
      * @param statusLine   e.g. "🔍 Scanning..." or "👇 Scroll down"
      */
     public static void showNavStatusBar(String keywordsLine, String statusLine) {
+        showNavStatusBar(keywordsLine, statusLine, null);
+    }
+
+    public static void showNavStatusBar(String keywordsLine, String statusLine, Runnable onHelpAction) {
         mainHandler.post(() -> {
             if (!isReady()) return;
             try {
                 if (navStatusBarView != null) {
                     TextView kw = navStatusBarView.findViewById(R.id.navKeywordsText);
                     TextView st = navStatusBarView.findViewById(R.id.navStatusText);
+                    View helpBtn = navStatusBarView.findViewById(R.id.navHelpButton);
+                    
                     if (kw != null) kw.setText("Searching: " + keywordsLine);
                     if (st != null) st.setText(statusLine);
+                    
+                    if (helpBtn != null) {
+                        if (onHelpAction != null) {
+                            helpBtn.setVisibility(View.VISIBLE);
+                            helpBtn.setOnClickListener(v -> onHelpAction.run());
+                        } else {
+                            helpBtn.setVisibility(View.GONE);
+                            helpBtn.setOnClickListener(null);
+                        }
+                    }
                     Log.d(TAG, "🔄 NavStatusBar updated: " + statusLine);
                     return;
                 }
@@ -137,10 +153,21 @@ public class AccessibilityOverlay {
                 TextView kw = navStatusBarView.findViewById(R.id.navKeywordsText);
                 TextView st = navStatusBarView.findViewById(R.id.navStatusText);
                 View spinner = navStatusBarView.findViewById(R.id.navStatusProgress);
+                View helpBtn = navStatusBarView.findViewById(R.id.navHelpButton);
                 
                 if (kw != null) kw.setText("Searching: " + keywordsLine);
                 if (st != null) st.setText(statusLine);
                 if (spinner != null) spinner.setVisibility(statusLine.contains("Scanning") ? View.VISIBLE : View.GONE);
+                
+                if (helpBtn != null) {
+                    if (onHelpAction != null) {
+                        helpBtn.setVisibility(View.VISIBLE);
+                        helpBtn.setOnClickListener(v -> onHelpAction.run());
+                    } else {
+                        helpBtn.setVisibility(View.GONE);
+                        helpBtn.setOnClickListener(null);
+                    }
+                }
 
                 wm.addView(navStatusBarView, topBannerParams());
                 Log.d(TAG, "🟣 NavStatusBar shown: " + statusLine);
@@ -151,18 +178,32 @@ public class AccessibilityOverlay {
         });
     }
 
-    /** Update only the status message line (keywords stay the same) */
     public static void updateNavStatus(String statusLine) {
+        updateNavStatus(statusLine, null);
+    }
+
+    public static void updateNavStatus(String statusLine, Runnable onHelpAction) {
         mainHandler.post(() -> {
             if (navStatusBarView == null) return;
             TextView st = navStatusBarView.findViewById(R.id.navStatusText);
             View spinner = navStatusBarView.findViewById(R.id.navStatusProgress);
+            View helpBtn = navStatusBarView.findViewById(R.id.navHelpButton);
+            
             if (st != null) {
                 st.setText(statusLine);
                 Log.d(TAG, "🔄 NavStatus: " + statusLine);
             }
             if (spinner != null) {
                 spinner.setVisibility(statusLine.contains("Scanning") ? View.VISIBLE : View.GONE);
+            }
+            if (helpBtn != null) {
+                if (onHelpAction != null) {
+                    helpBtn.setVisibility(View.VISIBLE);
+                    helpBtn.setOnClickListener(v -> onHelpAction.run());
+                } else {
+                    helpBtn.setVisibility(View.GONE);
+                    helpBtn.setOnClickListener(null);
+                }
             }
         });
     }

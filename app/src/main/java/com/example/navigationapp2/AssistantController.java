@@ -36,6 +36,9 @@ public class AssistantController {
     /** Parsed Groq response with navigation_paths + missing_slots */
     private JSONObject pendingCommand;
 
+    /** Stores raw text to pass back into Groq for Agentic Rerouting */
+    private String lastUserInput = "";
+
     /** True while step-by-step navigation is actively running inside Settings */
     private boolean navigationActive = false;
 
@@ -55,6 +58,7 @@ public class AssistantController {
      */
     public void handleUserInput(Context context, String rawText) {
         String text = rawText.trim().toLowerCase();
+        this.lastUserInput = text;
 
         // 1. Local intent classification (fast — no network)
         String validationError = CommandClassifier.getValidationError(text);
@@ -100,14 +104,22 @@ public class AssistantController {
                 return;
             }
 
-            // Check if intent is unknown (non-Settings command passed classification)
-            if ("unknown".equals(data.optString("intent", ""))) {
-                showStatus("❌ I can only navigate Android Settings");
+            // If navigation_paths is empty, nothing to navigate — inform user
+            if (data.getJSONArray("navigation_paths").length() == 0) {
+                showStatus("❌ Couldn't figure out how to navigate there. Try rephrasing.");
                 return;
             }
 
             pendingCommand   = data;
             navigationActive = false;
+
+            // -- LOGGING INITIAL PATH --
+            try {
+                String pathsJsonString = data.getJSONArray("navigation_paths").toString(2);
+                NavLogManager.getInstance().addLog(lastUserInput, pathsJsonString);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to log initial path: " + e.getMessage());
+            }
 
             NavigationAccessibilityService.currentState =
                     NavigationAccessibilityService.NavState.WAITING_FOR_SETTINGS;
@@ -151,17 +163,11 @@ public class AssistantController {
 
     // ─── PHASE 3: Execute steps on each window change ────────────────────────
 
-    /**
-     * Called by NavigationAccessibilityService on each TYPE_WINDOW_STATE_CHANGED
-     * or TYPE_WINDOW_CONTENT_CHANGED event while state == RUNNING.
-     */
     public void onWindowEvent(int eventType) {
         if (!navigationActive || pendingCommand == null) return;
         
-        if (eventType == android.view.accessibility.AccessibilityEvent.TYPE_VIEW_CLICKED) {
-            // User tapped the screen. Ensure they progress to the next step.
-            NavigationExecutor.advanceStepIfAppropriate();
-        }
+        // Removed global TYPE_VIEW_CLICKED advancement. 
+        // We only advance when the user actually taps the target's HighlightOverlay.
 
         // Update status to "Scanning..." immediately so user sees live feedback
         updateNavStatus("🔍 Scanning...");
@@ -195,8 +201,8 @@ public class AssistantController {
                         // User just tapped! Screen is transitioning. Keep scanning active.
                         showNavStatusBar(keywords, "🔍 Loading next screen...");
                     } else {
-                        // Node not found anywhere — default to scrolling down
-                        showNavStatusBar(keywords, "👇 Not found here — scroll down");
+                        // Node not found anywhere — default to scrolling down. Provide Reroute Help Button!
+                        showNavStatusBar(keywords, "👇 Not found here — scroll down", this::triggerAgenticReroute);
                     }
                     break;
 
@@ -231,27 +237,125 @@ public class AssistantController {
                 NavigationAccessibilityService.NavState.IDLE;
         HighlightOverlay.remove();
         removeNavStatusBar();
-        showStatus("✅ Done! You're on the right screen.");
+        
+        // Delay completion message slightly so it appears AFTER the page transition
+        mainHandler.postDelayed(() -> showStatus("✅ Done! You're on the right screen."), 800);
+        
         Log.d(TAG, "🏁 Navigation complete");
+    }
+
+    // ─── Phase 3.5: Agentic Rerouting ─────────────────────────────────────────
+
+    private void triggerAgenticReroute() {
+        if (!navigationActive || pendingCommand == null) return;
+
+        Log.d(TAG, "🚨 User requested Agentic Reroute. Pausing execution.");
+        
+        navigationActive = false;
+        NavigationAccessibilityService.currentState = NavigationAccessibilityService.NavState.PAUSED;
+        
+        String failedStep = NavigationExecutor.getCurrentStepKeywordsDisplay();
+        showNavStatusBar(failedStep, "🤖 Rethinking route...");
+        
+        java.util.List<String> visibleOptions = UICacheManager.getKnownLabelsForCurrentScreen(
+                NavigationAccessibilityService.instance.getRootInActiveWindow()
+        );
+        
+        int currentStepIdx = NavigationExecutor.getCurrentStepIndex();
+        
+        // ── Call Groq for Reroute ──
+        String uiTreeStr = "Visible Options: [" + String.join(", ", visibleOptions) + "]";
+        String settingsKnowledgeMap = UICacheManager.getBeautifulJsonString();
+        
+        GroqApiClient.processRerouteCommand(lastUserInput, failedStep, visibleOptions, settingsKnowledgeMap, new GroqApiClient.Callback() {
+            @Override
+            public void onSuccess(JSONObject data) {
+                mainHandler.post(() -> onRerouteSuccess(data, currentStepIdx, uiTreeStr));
+            }
+
+            @Override
+            public void onError(String error) {
+                mainHandler.post(() -> {
+                    showNavStatusBar(failedStep, "❌ Reroute failed: " + error);
+                    navigationActive = true;
+                    // Provide a slight pause before resuming the normal search 
+                    // so the user can read the error
+                    mainHandler.postDelayed(() -> {
+                        NavigationAccessibilityService.currentState = NavigationAccessibilityService.NavState.RUNNING;
+                        showNavStatusBar(failedStep, "👇 Not found here — scroll down", AssistantController.this::triggerAgenticReroute);
+                    }, 2000);
+                });
+            }
+        });
+    }
+
+    private void onRerouteSuccess(JSONObject data, int currentStepIdx, String uiTreeStr) {
+        try {
+            if (!data.has("navigation_paths")) {
+                showStatus("❌ Invalid AI response");
+                return;
+            }
+            
+            JSONArray newPaths = data.getJSONArray("navigation_paths");
+            if (newPaths.length() == 0) {
+                showStatus("❌ AI could not find a valid alternative route.");
+                return;
+            }
+            
+            // Get the entire new sequence from Groq
+            JSONArray newSequence = newPaths.getJSONArray(0);
+            
+            JSONArray oldPaths = pendingCommand.getJSONArray("navigation_paths");
+            JSONArray currentSequence = oldPaths.getJSONArray(0);
+            
+            // -- LOGGING REROUTE --
+            try {
+                String rerouteJsonString = newPaths.toString(2);
+                String fullLog = uiTreeStr + "\n\nAgentic Reroute Sequence injected at step " + currentStepIdx + ":\n" + rerouteJsonString;
+                NavLogManager.getInstance().addRerouteToLatest(fullLog);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to log reroute path: " + e.getMessage());
+            }
+
+            // Truncate the original sequence from the failed step onwards
+            while (currentSequence.length() > currentStepIdx) {
+                currentSequence.remove(currentStepIdx);
+            }
+            
+            // Append the entirety of the new sequence
+            for (int i = 0; i < newSequence.length(); i++) {
+                currentSequence.put(newSequence.getJSONArray(i));
+            }
+            
+            // Inform executor so it doesn't reset currentStepIndex back to 0
+            NavigationExecutor.informPathModified(oldPaths);
+            
+            Log.d(TAG, "✨ Reroute Success! Injected new sequence into step " + currentStepIdx + ": " + newSequence.toString());
+            
+            // Resume Navigation
+            navigationActive = true;
+            NavigationAccessibilityService.currentState = NavigationAccessibilityService.NavState.RUNNING;
+            
+            showNavStatusBar("", "🔍 Scanning...");
+            runNavigationStep();
+            
+        } catch (Exception e) {
+            Log.e(TAG, "❌ onRerouteSuccess error: " + e.getMessage());
+            showStatus("❌ Failed to process new route");
+        }
     }
 
     // ─── PHASE 4: User left Settings mid-navigation ──────────────────────────
 
-    /**
-     * Called by NavigationAccessibilityService when foreground package
-     * leaves Settings while state == RUNNING.
-     */
     public void onUserLeftSettings() {
         if (!navigationActive) return;
 
-        navigationActive = false;
-        NavigationAccessibilityService.currentState =
-                NavigationAccessibilityService.NavState.PAUSED;
-
+        // Update status so the overlay doesn't show "Scanning..." when user has left Settings.
+        // Navigation stays armed — some sub-settings open different packages (e.g. Home Screen).
+        String keywords = NavigationExecutor.getCurrentStepKeywordsDisplay();
+        showNavStatusBar(keywords, "↩️ Return to Settings to continue");
         HighlightOverlay.remove();
-        removeNavStatusBar();
-        showGuardBanner("⚙️ Please return to Settings to continue");
-        Log.d(TAG, "⏸ Navigation paused — user left Settings");
+        Log.d(TAG, "🔓 Left Settings — showing return prompt, navigation still armed");
     }
 
     // ─── PHASE 5: User returned to Settings while paused ─────────────────────
@@ -311,6 +415,10 @@ public class AssistantController {
 
     private void showNavStatusBar(String keywords, String status) {
         AccessibilityOverlay.showNavStatusBar(keywords, status);
+    }
+
+    private void showNavStatusBar(String keywords, String status, Runnable onHelpAction) {
+        AccessibilityOverlay.showNavStatusBar(keywords, status, onHelpAction);
     }
 
     private void updateNavStatus(String status) {

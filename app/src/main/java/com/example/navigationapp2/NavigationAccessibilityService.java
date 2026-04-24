@@ -61,6 +61,15 @@ public class NavigationAccessibilityService extends AccessibilityService {
         String packageName = event.getPackageName().toString();
         int    eventType   = event.getEventType();
 
+        // ── Dump UI Tree for Dev Viewer ──
+        if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || 
+            eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+            
+            if (!packageName.equals("com.example.navigationapp2") && !packageName.equals("com.android.systemui")) {
+                UITreeManager.getInstance().updateJSONTree();
+            }
+        }
+
         // ── Throttle fast-firing noise, but NEVER throttle clicks or window changes ──
         long now = System.currentTimeMillis();
         boolean samePackage = packageName.equals(lastPackage);

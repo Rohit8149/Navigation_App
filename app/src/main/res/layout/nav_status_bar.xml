@@ -1,66 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Navigation status bar — shown while navigation is running inside Settings.
-     Sits at the top of the screen, below the status bar.
-     Shows: current step keywords (small) + current status message (larger). -->
+<!-- Navigation status bar — shown while navigation is running inside Settings. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#EE0D1117"
-    android:elevation="14dp">
+    android:gravity="center_horizontal"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
-    <!-- Keywords line — small, muted. Shows what we are searching for. -->
-    <TextView
-        android:id="@+id/navKeywordsText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="2dp"
-        android:text="Searching: ..."
-        android:textColor="#7C7CAA"
-        android:textSize="11sp"
-        android:fontFamily="sans-serif"
-        android:singleLine="true"
-        android:ellipsize="end" />
-
-    <!-- Status message container — holds icon and text -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="10dp">
-
-        <!-- Spinner shown while scanning -->
-        <ProgressBar
-            android:id="@+id/navStatusProgress"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="8dp"
-            android:indeterminate="true"
-            android:visibility="gone"
-            android:indeterminateTint="#6C63FF" />
+        android:orientation="vertical"
+        android:background="@drawable/bg_overlay_pill"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:elevation="20dp">
 
         <TextView
-            android:id="@+id/navStatusText"
+            android:id="@+id/navKeywordsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🔍 Scanning..."
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:text="Searching: ..."
+            android:textColor="@color/accent"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="sans-serif-medium"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <ProgressBar
+                android:id="@+id/navStatusProgress"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateTint="@color/accent" />
+
+            <TextView
+                android:id="@+id/navStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔍 Scanning..."
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+
+            <Button
+                android:id="@+id/navHelpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/menu_bg"
+                android:backgroundTint="#2D3748"
+                android:fontFamily="sans-serif-medium"
+                android:text="I don't see it"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
-
-    <!-- Accent line at bottom -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#6C63FF" />
-
 </LinearLayout>

@@ -76,9 +76,10 @@ public class NavigationExecutor {
                     lastNodePath     = null;
                     Log.d(TAG, "🔄 New path → reset step index");
                     
-                    Log.d(TAG, "📋 Navigation Plan Details:");
+                    DevLogManager.info("NavExecutor", "═══ NEW NAVIGATION PLAN ═══");
                     for (int stepIdx = 0; stepIdx < path.length(); stepIdx++) {
-                        Log.d(TAG, "   " + (stepIdx + 1) + ". going to search for these elements: " + path.getJSONArray(stepIdx).toString());
+                        String aliases = path.getJSONArray(stepIdx).toString();
+                        DevLogManager.info("NavExecutor", "  Step " + (stepIdx+1) + ": " + aliases);
                     }
                 }
 
@@ -100,6 +101,10 @@ public class NavigationExecutor {
         return currentStepKeywordsDisplay;
     }
 
+    public static int getCurrentStepIndex() {
+        return currentStepIndex;
+    }
+
     /**
      * Reset all execution state.
      * Called by AssistantController.stop() between commands.
@@ -116,6 +121,7 @@ public class NavigationExecutor {
 
     public static void advanceStepIfAppropriate() {
         if (isWaitingForTap) {
+            DevLogManager.click("NavExecutor", "User tapped! Advancing from step " + currentStepIndex + " → " + (currentStepIndex+1));
             currentStepIndex++;
             isWaitingForTap = false;
             lastTapTime = System.currentTimeMillis();
@@ -127,15 +133,27 @@ public class NavigationExecutor {
         return (System.currentTimeMillis() - lastTapTime) < 1500;
     }
 
+    /**
+     * Called when the path is mutated in-place (e.g. Agentic Reroute) so we
+     * don't reset the currentStepIndex back to 0.
+     */
+    public static void informPathModified(JSONArray paths) {
+        try {
+            if (paths != null && paths.length() > 0) {
+                currentPathKey = paths.getJSONArray(0).toString();
+                Log.d(TAG, "🔄 Path modified mid-flight, updated pathKey to prevent reset");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "❌ informPathModified error", e);
+        }
+    }
+
     // ─── Single path execution ────────────────────────────────────────────────
 
     private static StepResult executeSinglePath(AccessibilityService service, JSONArray path) {
         try {
-            // ── Guard: bail if user left Settings ────────────────────────────
-            if (!isStillOnSettings(service)) {
-                Log.w(TAG, "⛔ Not on Settings — aborting step");
-                return StepResult.SETTINGS_EXITED;
-            }
+            // Removed strict `isStillOnSettings` guard during active navigation. 
+            // We want the AI to freely navigate any sub-package or app if needed.
 
             AccessibilityNodeInfo root = service.getRootInActiveWindow();
             if (root == null) {
@@ -146,16 +164,38 @@ public class NavigationExecutor {
             // Save UI snapshot for debug
             DebugSaver.saveScreen(service, "settings_scan");
 
+            // Update local tree cache
+            UICacheManager.recordScreen(service, root);
+
             // ── All steps done? ───────────────────────────────────────────────
             if (currentStepIndex >= path.length()) {
+                DevLogManager.ok("NavExecutor", "All " + path.length() + " steps completed! NAVIGATION DONE");
                 Log.d(TAG, "✅ All steps completed");
                 reset();
                 return StepResult.COMPLETE;
+            }
+            
+            // ── Agentic Undo/Back action interception ─────────────────────────
+            JSONArray currentStepRaw = path.getJSONArray(currentStepIndex);
+            if (currentStepRaw.length() > 0 && currentStepRaw.getString(0).equalsIgnoreCase("BACK")) {
+                Log.d(TAG, "🔙 Groq requested GLOBAL_ACTION_BACK");
+                service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                
+                // Pretend we tapped it, so the logic automatically advances to the NEXT step
+                isWaitingForTap = true;
+                advanceStepIfAppropriate();
+                
+                // We return NOT_FOUND internally so the UI says "Loading next screen" 
+                // and waits for the window change event to fire again
+                return StepResult.NOT_FOUND;
             }
 
             AccessibilityNodeInfo node = null;
             int foundTargetIndex = -1;
             List<String> foundKeywords = new ArrayList<>();
+
+            // Log current step being scanned
+            DevLogManager.step("NavExecutor", "--- Scanning step " + currentStepIndex + " of " + (path.length()-1) + " ---");
 
             // ── Robust Reverse-Priority Multi-Step Search ─────────────────
             // 1. Gather matches for all valid upcoming steps.
@@ -259,6 +299,10 @@ public class NavigationExecutor {
             HighlightOverlay.show(service, bounds, "👆 Tap here", () -> {
                 // 1. Force the physical system click!
                 if (finalNode != null) {
+                    CharSequence text = finalNode.getText();
+                    if (text == null) text = finalNode.getContentDescription();
+                    if (text != null) UICacheManager.setCurrentParent(text.toString());
+
                     finalNode.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 }
                 

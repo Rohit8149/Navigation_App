@@ -1,18 +1,24 @@
 <resources>
 
-    <!-- Main App Theme -->
+    <!-- Main App Theme: Premium Dark Setup -->
     <style name="Theme.NavigationApp2" parent="Theme.Material3.DayNight.NoActionBar">
 
         <!-- Primary Colors -->
         <item name="colorPrimary">@color/accent</item>
-        <item name="colorOnPrimary">@color/button_text</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
 
         <!-- Secondary -->
-        <item name="colorSecondary">@color/accent_cyan</item>
-        <item name="colorOnSecondary">@color/button_text</item>
+        <item name="colorSecondary">@color/accent_dark</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        
+        <!-- Backgrounds -->
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorOnSurface">@color/text_primary</item>
 
-        <!-- Status Bar -->
+        <!-- Status & Nav Bar -->
         <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_background</item>
 
     </style>
 
@@ -20,8 +26,6 @@
     <style name="Theme.NavigationApp2.Splash" parent="Theme.NavigationApp2">
         <item name="android:windowBackground">@color/dark_background</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:statusBarColor">@color/dark_background</item>
-        <item name="android:navigationBarColor">@color/dark_background</item>
     </style>
 
 </resources>

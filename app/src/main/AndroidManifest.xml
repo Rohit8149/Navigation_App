@@ -29,6 +29,21 @@
             android:name=".MainActivity"
             android:exported="false"/>
 
+        <!-- Navigation History Logs -->
+        <activity
+            android:name=".LogActivity"
+            android:exported="false"/>
+
+        <!-- View UI Tree -->
+        <activity
+            android:name=".UITreeActivity"
+            android:exported="false"/>
+
+        <!-- Device Information -->
+        <activity
+            android:name=".DeviceInfoActivity"
+            android:exported="false"/>
+
         <!-- Overlay -->
         <service
             android:name=".OverlayService"

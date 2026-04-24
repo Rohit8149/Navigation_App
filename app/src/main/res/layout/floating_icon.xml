@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="100dp">
-    
-    <!-- Background glowing orb -->
-    <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_glowing_orb"/>
+    android:layout_width="64dp"
+    android:layout_height="64dp">
 
+    <!-- Solid opaque circle — always clearly visible -->
     <ImageView
         android:id="@+id/icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_app"
-        android:tint="@color/accent"
-        android:background="@drawable/circle_bg"
-        android:padding="16dp"/>
+        android:tint="@color/text_primary"
+        android:background="@drawable/bg_icon_solid"
+        android:elevation="8dp"
+        android:padding="14dp"/>
 
 </FrameLayout>

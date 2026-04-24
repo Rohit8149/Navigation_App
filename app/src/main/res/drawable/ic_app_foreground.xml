@@ -16,16 +16,16 @@
                 android:type="linear"
                 android:startX="22" android:startY="22"
                 android:endX="86" android:endY="86">
-                <item android:offset="0.0" android:color="#EAB308"/>
-                <item android:offset="1.0" android:color="#D97706"/>
+                <item android:offset="0.0" android:color="#3B82F6"/>
+                <item android:offset="1.0" android:color="#1D4ED8"/>
             </gradient>
         </aapt:attr>
     </path>
 
-    <!-- Compass needle top (gold) -->
+    <!-- Compass needle top (blue) -->
     <path
         android:pathData="M54,54 L50,30 L54,22 L58,30 Z"
-        android:fillColor="#EAB308"/>
+        android:fillColor="#3B82F6"/>
 
     <!-- Compass needle bottom (gray) -->
     <path
@@ -37,19 +37,19 @@
         android:pathData="M54,54 L30,50 L22,54 L30,58 Z"
         android:fillColor="#6B7280"/>
 
-    <!-- Compass needle right (gold) -->
+    <!-- Compass needle right (blue) -->
     <path
         android:pathData="M54,54 L78,50 L86,54 L78,58 Z"
-        android:fillColor="#EAB308"/>
+        android:fillColor="#3B82F6"/>
 
     <!-- Center circle -->
     <path
         android:pathData="M54,54m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0"
-        android:fillColor="#050505"/>
+        android:fillColor="#09090B"/>
 
     <!-- Center dot -->
     <path
         android:pathData="M54,54m-2,0a2,2 0 1,0 4,0a2,2 0 1,0 -4,0"
-        android:fillColor="#EAB308"/>
+        android:fillColor="#3B82F6"/>
 
 </vector>

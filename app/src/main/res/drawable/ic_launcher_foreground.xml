@@ -16,16 +16,16 @@
                 android:type="linear"
                 android:startX="26" android:startY="26"
                 android:endX="82" android:endY="82">
-                <item android:offset="0.0" android:color="#EAB308"/>
-                <item android:offset="1.0" android:color="#D97706"/>
+                <item android:offset="0.0" android:color="#3B82F6"/>
+                <item android:offset="1.0" android:color="#1D4ED8"/>
             </gradient>
         </aapt:attr>
     </path>
 
-    <!-- Compass needle top (gold) -->
+    <!-- Compass needle top (blue) -->
     <path
         android:pathData="M54,54 L50,34 L54,28 L58,34 Z"
-        android:fillColor="#EAB308"/>
+        android:fillColor="#3B82F6"/>
 
     <!-- Compass needle bottom (lighter gray) -->
     <path
@@ -37,14 +37,14 @@
         android:pathData="M54,54 L34,50 L28,54 L34,58 Z"
         android:fillColor="#6B7280"/>
 
-    <!-- Compass needle right (gold) -->
+    <!-- Compass needle right (blue) -->
     <path
         android:pathData="M54,54 L74,50 L80,54 L74,58 Z"
-        android:fillColor="#EAB308"/>
+        android:fillColor="#3B82F6"/>
 
     <!-- Center dot -->
     <path
         android:pathData="M54,54m-4,0a4,4 0 1,0 8,0a4,4 0 1,0 -8,0"
-        android:fillColor="#050505"/>
+        android:fillColor="#09090B"/>
 
 </vector>

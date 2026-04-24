@@ -33,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         btnOverlay = findViewById(R.id.btnOverlay);
         btnAccessibility = findViewById(R.id.btnAccessibility);
         btnToggleAssistant = findViewById(R.id.btnToggleAssistant);
+        findViewById(R.id.btnViewLogs).setOnClickListener(v -> 
+            startActivity(new Intent(this, LogActivity.class))
+        );
+        findViewById(R.id.btnViewUITree).setOnClickListener(v -> 
+            startActivity(new Intent(this, UITreeActivity.class))
+        );
+        findViewById(R.id.btnDeviceInfo).setOnClickListener(v ->
+            startActivity(new Intent(this, DeviceInfoActivity.class))
+        );
         permissionLayout = findViewById(R.id.permissionLayout);
         controlLayout = findViewById(R.id.controlLayout);
 
